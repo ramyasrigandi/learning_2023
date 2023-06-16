@@ -1,4 +1,5 @@
-int main(){ 
+ #include<stdio.h>
+ int main(){ 
   
      int marks; 
      printf("Enter Student marks :- "); 
