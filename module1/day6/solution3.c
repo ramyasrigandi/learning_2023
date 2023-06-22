@@ -1,53 +1,42 @@
 #include <stdio.h>
 
-struct complex {
-    float real;
-    float imag;
+struct time {
+    int hours;
+    int minutes;
+    int seconds;
 };
 
-void read_complex(struct complex *c) {
-    printf("Enter the real part of the complex number: ");
-    scanf("%f", &c->real);
-    printf("Enter the imaginary part of the complex number: ");
-    scanf("%f", &c->imag);
-}
+void diff_between_time(struct time t1, struct time t2, struct time *diff) {
+    diff->hours = t2.hours - t1.hours;
+    diff->minutes = t2.minutes - t1.minutes;
+    diff->seconds = t2.seconds - t1.seconds;
 
-void write_complex(struct complex c) {
-    printf("The complex number is %.2f + %.2fi\n", c.real, c.imag);
-}
+    if (diff->seconds < 0) {
+        diff->seconds += 60;
+        diff->minutes--;
+    }
 
-struct complex add_complex(struct complex c1, struct complex c2) {
-    struct complex sum;
-    sum.real = c1.real + c2.real;
-    sum.imag = c1.imag + c2.imag;
-    return sum;
-}
-
-struct complex multiply_complex(struct complex c1, struct complex c2) {
-    struct complex product;
-    product.real = c1.real * c2.real - c1.imag * c2.imag;
-    product.imag = c1.real * c2.imag + c1.imag * c2.real;
-    return product;
+    if (diff->minutes < 0) {
+        diff->minutes += 60;
+        diff->hours--;
+    }
 }
 
 int main() {
-    struct complex c1, c2, sum, product;
-    printf("Enter the first complex number:\n");
-    read_complex(&c1);
+    struct time t1, t2, diff;
 
-    printf("Enter the second complex number:\n");
-    read_complex(&c2);
+    
+    printf("Enter the first time period (hh:mm:ss): ");
+    scanf("%d:%d:%d", &t1.hours, &t1.minutes, &t1.seconds);
 
-    sum = add_complex(c1, c2);
-
-    printf("\nSum of the complex numbers:\n");
-    write_complex(sum);
+    
+    printf("Enter the second time period (hh:mm:ss): ");
+    scanf("%d:%d:%d", &t2.hours, &t2.minutes, &t2.seconds);
 
    
-    product = multiply_complex(c1, c2);
+    diff_between_time(t1, t2, &diff);
 
-    printf("\nProduct of the complex numbers:\n");
-    write_complex(product);
+    printf("The difference between the two time periods is %d:%d:%d\n", diff.hours, diff.minutes, diff.seconds);
 
     return 0;
 }
